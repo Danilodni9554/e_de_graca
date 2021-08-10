@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Entity
 @Table(name="tb_tema")
-public class ModelTema {
+public class Tema {
 
 	// Atributos
 	@Id //primary key
@@ -24,7 +24,7 @@ public class ModelTema {
 	private String area;
 	@NotNull
 	@Size(min=1, max=50, message="Limite de 50 Caracteres")
-	private String tipo_de_acao;
+	private String tipoDeAcao;
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)//tira ou deixa ?
 	private Date data;
@@ -51,12 +51,13 @@ public class ModelTema {
 		this.area = area;
 	}
 
-	public String getTipo_de_acao() {
-		return tipo_de_acao;
+	
+	public String getTipoDeAcao() {
+		return tipoDeAcao;
 	}
 
-	public void setTipo_de_acao(String tipo_de_acao) {
-		this.tipo_de_acao = tipo_de_acao;
+	public void setTipoDeAcao(String tipoDeAcao) {
+		this.tipoDeAcao = tipoDeAcao;
 	}
 
 	public Date getData() {
