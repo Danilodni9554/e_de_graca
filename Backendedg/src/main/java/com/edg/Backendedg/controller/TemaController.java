@@ -1,6 +1,5 @@
 package com.edg.Backendedg.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,63 +18,47 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edg.Backendedg.model.Tema;
 import com.edg.Backendedg.repository.TemaRepository;
 
-@RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/tema")
-public class TemaController {
-		
-		@Autowired
-		private TemaRepository repository;
-		
-		@GetMapping
-		public ResponseEntity<List<Tema>> getAll(){
-			return ResponseEntity.ok(repository.findAll());
-		}
-		
-		@GetMapping("/{id}")
-		public ResponseEntity<Tema> getById(@PathVariable long id){
-			return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
-		}
-		
-		@GetMapping("/area/{area}")
-		public ResponseEntity<List<Tema>> getByArea(@PathVariable String area){
-			return ResponseEntity.ok(repository.findAllByAreaContainingIgnoreCase(area));
-		}
-		
-		@GetMapping("/tipo-de-acao/{tipoDeAcao}")
-		public ResponseEntity<List<Tema>> getByTipo(@PathVariable String tipoDeAcao){
-			return ResponseEntity.ok(repository.findAllByTipoDeAcaoContainingIgnoreCase(tipoDeAcao));
-		}
-		
-		@GetMapping("/publico/{publico}")
-		public ResponseEntity<List<Tema>> getByPublico(@PathVariable String publico){
-			return ResponseEntity.ok(repository.findAllByAreaContainingIgnoreCase(publico));
-		}
-		
-		@GetMapping("/cidade/{cidade}")
-		public ResponseEntity<List<Tema>> getByCidade(@PathVariable String cidade){
-			return ResponseEntity.ok(repository.findAllByAreaContainingIgnoreCase(cidade));
-		}
-		
-		@GetMapping("/data/{data}")
-		public ResponseEntity<List<Tema>> getByArea(@PathVariable LocalDate data){
-			return ResponseEntity.ok(repository.findAllByData(data));
-		}
-		
-		@PostMapping
-		public ResponseEntity<Tema> post(@RequestBody Tema post){
-			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(post));
-		}
-		
-		@PutMapping
-		public ResponseEntity<Tema> put(@RequestBody Tema put){
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(put));
-		}
-		
-		@DeleteMapping("/{id}")
-		public String delete(@PathVariable long id) {
-			repository.deleteById(id);
-			return "Deletado";
-		}
 
+
+@RestController
+@RequestMapping("/tema")
+@CrossOrigin("*")
+public class TemaController {
+	
+	@Autowired
+	private TemaRepository repository;
+	
+	@GetMapping
+	public ResponseEntity<List<Tema>> getAll(){
+		return ResponseEntity.ok(repository.findAll());
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Tema> GetById(@PathVariable long id){
+		return repository.findById(id)
+				.map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping("/titulo/{titulo}")
+	public ResponseEntity<List<Tema>> GetByArea(@PathVariable String titulo){
+		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
+	}
+	
+	
+	@PostMapping
+	public ResponseEntity<Tema> Post(@RequestBody Tema post){
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(post));
+	}
+	
+	@PutMapping
+	public ResponseEntity<Tema> Put(@RequestBody Tema put){
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(put));
+	}
+	
+	@DeleteMapping("/{id}")
+	public String Delete(@PathVariable long id) {
+		repository.deleteById(id);
+		return "Post deletado";
+	}
+}
